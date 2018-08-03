@@ -1,4 +1,4 @@
-# E2E base image [![Build Status](https://travis-ci.org/daggerok/e2e.svg?branch=master)](https://travis-ci.org/daggerok/e2e)
+# E2E image [![Build Status](https://travis-ci.org/daggerok/e2e.svg?branch=master)](https://travis-ci.org/daggerok/e2e)
 automated build for docker hub
 
 stack:
@@ -33,7 +33,7 @@ COPY . .
 
 ```dockerfile
 
-FROM daggerok/e2e:ubuntu-xvfb-jdk8-chrome-v1
+FROM daggerok/e2e:ubuntu-xvfb-jdk8-chrome-latest
 WORKDIR 'project-directory/'
 ENTRYPOINT start-xvfb && ./gradlew test chrome
 COPY . .
@@ -42,7 +42,7 @@ COPY . .
 
 ```dockerfile
 
-FROM daggerok/e2e:ubuntu-xvfb-jdk8-firefox-latest
+FROM daggerok/e2e:ubuntu-xvfb-jdk8-firefox-v1
 WORKDIR 'project-directory/'
 ENTRYPOINT start-xvfb && ./gradlew test firefox
 COPY . .
@@ -106,7 +106,7 @@ git push origin $tagName # push tag
 # ie
 git add .
 git commit -am ...
-git push origin ubuntu-xvfb-jdk8-base
-git tag ubuntu-xvfb-jdk8-base-v1
+git push origin ubuntu-xvfb-jdk8
+git tag ubuntu-xvfb-jdk8-v1
 git push origin --tags
 ```
