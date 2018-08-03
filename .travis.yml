@@ -1,0 +1,34 @@
+service:
+- docker
+env:
+  global:
+  - VERSION=v1
+  - DOCKER_IMAGE="daggerok/e2e:${TRAVIS_BRANCH}"
+  - IMAGE="${TRAVIS_BRANCH}-${TRAVIS_BUILD_NUMBER}"
+  - TERM=dumb
+  - secure: KLDnrnXgD6pbAa9CwwiEvcbO1umX2FrbFc/b2uYYVbSrHRI64V5iwYnYDLE4Ldx8CL1/5pzpSbBciHYXOcUZGu9jVm4GuCQd0RAZYwymG8rJBxcfdyuGRooZHjGB5A3BtYtDvViMI3oLe2J1Su5dycsASfc6Va51QVx6L/Jm69yYG9/MmVsCh3jWHpA3rrGhd5vKmfJeb6EUjckIf2iT1flifHr5C6dv3rLtVisiLSUq4YEEqzNWOoI2qjTUgXidXA3XTvrXvm0GgRc/eKfZECPmPsG+Oo0jiNRLJeOnlOmKPDbDgHbLC1yQ8l5C27LZ9XUNRPDZ8Hh5vnywhvs5Jw1+sVdyv0NYwKY0eclQlL7Zu7y0fUODv6g7EpE6XW1q6SYQsoChe5NGG6RD9A+NI51UNmSYK2ziwu9bddN5Mr++x13BZhicaWqELwJ9EXSD8WFbtminFASnZwRuEVDsSHGiJBuhapAqaLFroC3PiYpXYta8Fdw+9uXJpQ35BtPQGAjZdO9fUn1vwJ/7G7IjQH58+FGUZqfLdv1lB8n5m4hj2L9bblDA6et7ubhks9EvTYI/SiIqeeYuQEAov0RZEaVxneRXdeClFWWEdYOFrzwBDqL4hRAz2vyzdySv0iRmfbWwVcOM7qsWDN2CbFit6UTU5XnoZiUZ+DkBd2zdxmI=
+addons:
+  apt:
+    update: true
+    packages:
+    - bash
+    - docker-ce
+install: true
+if: tag IS blank
+script:
+- |
+  if [ ".${TRAVIS_BRANCH}" = ".master" ]; then
+    export DOCKER_IMAGE="daggerok/e2e:ubuntu-xvfb-jdk8"
+  fi
+- docker build --no-cache --force-rm -t ${IMAGE} .
+after_success:
+- echo ${DOCKER_PASSWORD} | docker login -u daggerok --password-stdin
+- docker tag ${IMAGE} ${DOCKER_IMAGE}
+- docker tag ${IMAGE} "{DOCKER_IMAGE}-latest"
+- docker tag ${IMAGE} "${DOCKER_IMAGE}-${VERSION}"
+- docker push ${DOCKER_IMAGE}
+- docker push "${DOCKER_IMAGE}-latest"
+- docker push "${DOCKER_IMAGE}-${VERSION}"
+cache:
+  directories:
+  - ~/.docker
