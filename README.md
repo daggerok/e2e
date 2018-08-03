@@ -12,6 +12,9 @@ stack:
 available images:
 
 - **Docker Ubuntu Trusty 14.04 base image including XVFB and JDK8**
+- **Docker Ubuntu Trusty 14.04 image including Chrome browser, chrome driver, XVFB and JDK8**
+- **Docker Ubuntu Trusty 14.04 image including Firefox browser, gecko driver, XVFB and JDK8**
+- **Docker Ubuntu Trusty 14.04 image including Firefox and Chrome browsers, theirs web-drivers, XVFB and JDK8**
 
 tags:
 
