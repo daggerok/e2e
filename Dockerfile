@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:12.04
 LABEL MAINTAINER='Maksim Kostromin <daggerok@gmail.com> https://github.com/daggerok'
 ENV DISPLAY=':99' \
     DEBIAN_FRONTEND='noninteractive' \
@@ -12,9 +12,9 @@ ARG JAVA_OPTS_ARGS='\
 ENV JAVA_OPTS="${JAVA_OPTS} ${JAVA_OPTS_ARGS}"
 # execute e2e tests as non root, but sudo user
 USER root
-RUN apt update -y \
+RUN apt-get update -y \
  && apt-get clean -y \
- && apt install --fix-missing -y sudo openssh-server \
+ && apt-get install --fix-missing -y sudo openssh-server \
  && useradd -m e2e && echo 'e2e:e2e' | chpasswd \
  && adduser e2e sudo \
  && echo '\ne2e ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers \
@@ -24,7 +24,7 @@ WORKDIR /home/e2e
 USER e2e
 # prepare
 RUN sudo apt-get update -y \
- && sudo apt-get install --fix-missing -y wget bash software-properties-common
+ && sudo apt-get install --fix-missing -y wget bash python-software-properties software-properties-common
 # jdk8
 RUN sudo apt-add-repository -y ppa:webupd8team/java \
  && sudo apt-get update -y \
