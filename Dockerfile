@@ -12,9 +12,9 @@ ARG JAVA_OPTS_ARGS='\
 ENV JAVA_OPTS="${JAVA_OPTS} ${JAVA_OPTS_ARGS}"
 # execute e2e tests as non root, but sudo user
 USER root
-RUN apt update -y \
+RUN apt-get update -y \
  && apt-get clean -y \
- && apt install --fix-missing -y sudo openssh-server \
+ && apt-get install --fix-missing -y sudo openssh-server \
  && useradd -m e2e && echo 'e2e:e2e' | chpasswd \
  && adduser e2e sudo \
  && echo '\ne2e ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers \
