@@ -29,6 +29,8 @@ after_success:
 - docker push ${DOCKER_IMAGE}
 - docker push "${DOCKER_IMAGE}-latest"
 - docker push "${DOCKER_IMAGE}-${VERSION}"
+after_script:
+- sudo rm -rf ${HOME}/.docker/config.json
 cache:
   directories:
-  - ~/.docker
+  - ${HOME}/.docker
