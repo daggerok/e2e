@@ -1,4 +1,4 @@
-# E2E image [![Build Status](https://travis-ci.org/daggerok/e2e.svg?branch=trusty-xvfb-jdk8)](https://travis-ci.org/daggerok/e2e)
+# E2E image [![Build Status](https://travis-ci.org/daggerok/e2e.svg?branch=precise-xvfb-jdk8)](https://travis-ci.org/daggerok/e2e)
 automated build for docker hub
 
 stack:
@@ -125,7 +125,7 @@ git push origin $tagName # push tag
 # ie
 git add .
 git commit -am ...
-git push origin trusty-xvfb-jdk8
-git tag trusty-xvfb-jdk8-v1
+git push origin precise-xvfb-jdk8
+git tag precise-xvfb-jdk8-v1
 git push origin --tags
 ```
