@@ -1,4 +1,4 @@
-FROM daggerok/e2e:xenial-xvfb-jdk8-base-v1
+FROM daggerok/e2e:bionic-xvfb-jdk8-base-v1
 LABEL MAINTAINER='Maksim Kostromin <daggerok@gmail.com> https://github.com/daggerok'
 ENV DISPLAY=':99' \
     CHROME_DRV_VER='2.41'
