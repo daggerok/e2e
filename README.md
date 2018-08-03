@@ -1,4 +1,4 @@
-# E2E firefox image [![Build Status](https://travis-ci.org/daggerok/e2e.svg?branch=master)](https://travis-ci.org/daggerok/e2e)
+# E2E firefox image [![Build Status](https://travis-ci.org/daggerok/e2e.svg?branch=trusty-xvfb-jdk8-firefox)](https://travis-ci.org/daggerok/e2e)
 automated build for docker hub
 
 stack:
@@ -12,10 +12,21 @@ stack:
 available images:
 
 - **Docker Ubuntu Trusty 14.04 base image including XVFB and JDK8**
+- **Docker Ubuntu Trusty 14.04 image including Chrome browser, chrome driver, XVFB and JDK8**
+- **Docker Ubuntu Trusty 14.04 image including Firefox browser, gecko driver, XVFB and JDK8**
+- **Docker Ubuntu Trusty 14.04 image including Firefox and Chrome browsers, theirs web-drivers, XVFB and JDK8**
 
 tags:
 
+- [ubuntu-xvfb-jdk8](https://github.com/daggerok/e2e/tree/ubuntu-xvfb-jdk8-v1)
+- [ubuntu-xvfb-jdk8-chrome](https://github.com/daggerok/e2e/tree/ubuntu-xvfb-jdk8-chrome-v1)
+- [ubuntu-xvfb-jdk8-firefox](https://github.com/daggerok/e2e/tree/ubuntu-xvfb-jdk8-firefox-v1)
 - [ubuntu-xvfb-jdk8-base](https://github.com/daggerok/e2e/tree/ubuntu-xvfb-jdk8-base-v1)
+
+- [trusty-xvfb-jdk8](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-v1)
+- [trusty-xvfb-jdk8-chrome](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-chrome-v1)
+- [trusty-xvfb-jdk8-firefox](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-firefox-v1)
+- [trusty-xvfb-jdk8-base](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-base-v1)
 
 ## Usage
 
@@ -106,7 +117,7 @@ git push origin $tagName # push tag
 # ie
 git add .
 git commit -am ...
-git push origin ubuntu-xvfb-jdk8-firefox
-git tag ubuntu-xvfb-jdk8-firefox-v1
+git push origin trusty-xvfb-jdk8-firefox
+git tag trusty-xvfb-jdk8-firefox-v1
 git push origin --tags
 ```
