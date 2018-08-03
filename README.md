@@ -1,8 +1,9 @@
-# E2E base image [![Build Status](https://travis-ci.org/daggerok/e2e.svg?branch=xenial-xvfb-jdk8-base)](https://travis-ci.org/daggerok/e2e)
+# E2E base image [![Build Status](https://travis-ci.org/daggerok/e2e.svg?branch=bionic-xvfb-jdk8-base)](https://travis-ci.org/daggerok/e2e)
 automated build for docker hub
 
 stack:
 
+- Docker Ubuntu `Bionic 18.04`
 - Docker Ubuntu `Xenial 16.04`
 - Docker Ubuntu `Trusty 14.04`
 - Docker Ubuntu `Precise 12.04`
@@ -27,7 +28,9 @@ tags:
 - [ubuntu-xvfb-jdk8-firefox](https://github.com/daggerok/e2e/tree/ubuntu-xvfb-jdk8-firefox-v1)
 - [ubuntu-xvfb-jdk8-base](https://github.com/daggerok/e2e/tree/ubuntu-xvfb-jdk8-base-v1)
 
-- [xenial-xvfb-jdk8-base](https://github.com/daggerok/e2e/tree/ubuntu-xvfb-jdk8-base-v1)
+- [bionic-xvfb-jdk8-base](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-base-v1)
+
+- [xenial-xvfb-jdk8-base](https://github.com/daggerok/e2e/tree/xenial-xvfb-jdk8-base-v1)
 
 - [trusty-xvfb-jdk8](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-v1)
 - [trusty-xvfb-jdk8-chrome](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-chrome-v1)
@@ -125,7 +128,7 @@ git push origin $tagName # push tag
 # ie
 git add .
 git commit -am ...
-git push origin xenial-xvfb-jdk8-base
-git tag xenial-xvfb-jdk8-base-v1
+git push origin bionic-xvfb-jdk8-base
+git tag bionic-xvfb-jdk8-base-v1
 git push origin --tags
 ```
