@@ -117,7 +117,7 @@ git push origin $tagName # push tag
 # ie
 git add .
 git commit -am ...
-git push origin ubuntu-xvfb-jdk8-base
-git tag ubuntu-xvfb-jdk8-base-v1
+git push origin trusty-xvfb-jdk8-base
+git tag trusty-xvfb-jdk8-base-v1
 git push origin --tags
 ```
