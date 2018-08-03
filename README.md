@@ -1,4 +1,4 @@
-# E2E image [![Build Status](https://travis-ci.org/daggerok/e2e.svg?branch=ubuntu-xvfb-jdk8)](https://travis-ci.org/daggerok/e2e)
+# E2E image [![Build Status](https://travis-ci.org/daggerok/e2e.svg?branch=trusty-xvfb-jdk8)](https://travis-ci.org/daggerok/e2e)
 automated build for docker hub
 
 stack:
@@ -17,6 +17,8 @@ available images:
 - **Docker Ubuntu Trusty 14.04 image including Firefox and Chrome browsers, theirs web-drivers, XVFB and JDK8**
 
 tags:
+
+- [latest (trusty-xvfb-jdk8)](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-v1)
 
 - [ubuntu-xvfb-jdk8](https://github.com/daggerok/e2e/tree/ubuntu-xvfb-jdk8-v1)
 - [ubuntu-xvfb-jdk8-chrome](https://github.com/daggerok/e2e/tree/ubuntu-xvfb-jdk8-chrome-v1)
@@ -117,7 +119,7 @@ git push origin $tagName # push tag
 # ie
 git add .
 git commit -am ...
-git push origin ubuntu-xvfb-jdk8
-git tag ubuntu-xvfb-jdk8-v1
+git push origin trusty-xvfb-jdk8
+git tag trusty-xvfb-jdk8-v1
 git push origin --tags
 ```
