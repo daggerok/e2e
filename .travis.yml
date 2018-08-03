@@ -24,7 +24,7 @@ script:
 after_success:
 - echo ${DOCKER_PASSWORD} | docker login -u daggerok --password-stdin
 - docker tag ${IMAGE} ${DOCKER_IMAGE}
-- docker tag ${IMAGE} "{DOCKER_IMAGE}-latest"
+- docker tag ${IMAGE} "${DOCKER_IMAGE}-latest"
 - docker tag ${IMAGE} "${DOCKER_IMAGE}-${VERSION}"
 - docker push ${DOCKER_IMAGE}
 - docker push "${DOCKER_IMAGE}-latest"
