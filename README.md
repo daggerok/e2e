@@ -1,4 +1,4 @@
-# E2E chrome image [![Build Status](https://travis-ci.org/daggerok/e2e.svg?branch=ubuntu-xvfb-jdk8-chrome)](https://travis-ci.org/daggerok/e2e)
+# E2E chrome image [![Build Status](https://travis-ci.org/daggerok/e2e.svg?branch=trusty-xvfb-jdk8-chrome)](https://travis-ci.org/daggerok/e2e)
 automated build for docker hub
 
 stack:
@@ -117,7 +117,7 @@ git push origin $tagName # push tag
 # ie
 git add .
 git commit -am ...
-git push origin ubuntu-xvfb-jdk8-chrome
-git tag ubuntu-xvfb-jdk8-chrome-v1
+git push origin trusty-xvfb-jdk8-chrome
+git tag trusty-xvfb-jdk8-chrome-v1
 git push origin --tags
 ```
