@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 LABEL MAINTAINER='Maksim Kostromin <daggerok@gmail.com> https://github.com/daggerok'
 ENV DISPLAY=':99' \
     DEBIAN_FRONTEND='noninteractive' \
