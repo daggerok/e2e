@@ -1,9 +1,9 @@
-FROM daggerok/e2e:trusty-xvfb-jdk8-base-v1
+FROM daggerok/e2e:trusty-xvfb-jdk8-base-v2
 LABEL MAINTAINER='Maksim Kostromin <daggerok@gmail.com> https://github.com/daggerok'
 ENV DISPLAY=':99' \
-    CHROME_DRV_VER='2.41'
+    CHROME_DRV_VER='2.43'
 # chrome
-RUN sudo apt-get update -y \
+RUN sudo apt-get update -y || echo 'oops...' \
  && sudo apt-get clean -y \
  && sudo apt-get install --fix-missing -y \
       fonts-liberation libappindicator3-1 libasound2 libatk-bridge2.0-0 \
