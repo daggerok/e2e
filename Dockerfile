@@ -12,9 +12,9 @@ ARG JAVA_OPTS_ARGS='\
 ENV JAVA_OPTS="${JAVA_OPTS} ${JAVA_OPTS_ARGS}"
 # execute e2e tests as non root, but sudo user
 USER root
-RUN apt update -y \
+RUN apt-get update -y || echo 'oops...' \
  && apt-get clean -y \
- && apt install --fix-missing -y sudo openssh-server \
+ && apt-get install --fix-missing -y sudo openssh-server \
  && useradd -m e2e && echo 'e2e:e2e' | chpasswd \
  && adduser e2e sudo \
  && echo '\ne2e ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers \
@@ -23,11 +23,11 @@ RUN apt update -y \
 WORKDIR /home/e2e
 USER e2e
 # prepare
-RUN sudo apt-get update -y \
+RUN sudo apt-get update -y || echo 'oops...' \
  && sudo apt-get install --fix-missing -y wget bash software-properties-common
 # jdk8
 RUN sudo apt-add-repository -y ppa:webupd8team/java \
- && sudo apt-get update -y \
+ && sudo apt-get update -y || echo 'oops...' \
  && sudo echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections \
  && sudo echo debconf shared/accepted-oracle-license-v1-1   seen true | sudo debconf-set-selections \
  && sudo apt-get install --fix-missing -y oracle-java8-installer oracle-java8-set-default oracle-java8-unlimited-jce-policy
@@ -35,6 +35,8 @@ RUN sudo apt-add-repository -y ppa:webupd8team/java \
 RUN sudo apt-get install --fix-missing -y xvfb xorg xvfb dbus-x11 xfonts-100dpi xfonts-75dpi xfonts-cyrillic \
  && echo '#!/bin/bash \n\
 sudo chown -R e2e:e2e ~/ || true \n\
+echo "${JAVA_OPTS}" \n\
+java -version \n\
 echo "starting Xvfb..." \n\
 sudo Xvfb -ac :99 -screen 0 1280x1024x16 & \n' \
       >> ./start-xvfb \
