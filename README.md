@@ -1,4 +1,4 @@
-# E2E image [![Build Status](https://travis-ci.org/daggerok/e2e.svg?branch=bionic-xvfb-jdk8)](https://travis-ci.org/daggerok/e2e)
+# E2E image [![Build Status](https://travis-ci.org/daggerok/e2e.svg?branch=master)](https://travis-ci.org/daggerok/e2e)
 automated build for docker hub
 
 variations:
