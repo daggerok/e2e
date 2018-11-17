@@ -8,37 +8,46 @@ variations:
 - Docker Ubuntu `Trusty 14.04`
 - Docker Ubuntu `Precise 12.04`
 - Oracle Java Development Kit 8
-- Chrome with chrome driver version: `2.41`
-- Firefox with gecko driver version: `0.21.0`
+- Chrome with chrome driver version: `2.43`
+- Firefox with gecko driver version: `0.23.0`
 - Установка X Virtual Frame Buffer (xvfb)
 
 available images:
 
-- [**latest (bionic-xvfb-jdk8)** - Ubuntu 18.04 image including Firefox and Chrome browsers, theirs web-drivers, XVFB and JDK8](https://github.com/daggerok/e2e/tree/master)
+- **Docker Ubuntu Trusty 14.04 base image including XVFB and JDK8**
+- **Docker Ubuntu Trusty 14.04 image including Chrome browser, chrome driver, XVFB and JDK8**
+- **Docker Ubuntu Trusty 14.04 image including Firefox browser, gecko driver, XVFB and JDK8**
+- **Docker Ubuntu Trusty 14.04 image including Firefox and Chrome browsers, theirs web-drivers, XVFB and JDK8**
 
-- [**ubuntu-xvfb-jdk8** - Ubuntu 18.04 image including Firefox and Chrome browsers, theirs web-drivers, XVFB and JDK8](https://github.com/daggerok/e2e/tree/ubuntu-xvfb-jdk8-v1)
-- [**ubuntu-xvfb-jdk8-chrome** - Ubuntu 18.04 image including Chrome browser, chrome driver, XVFB and JDK8](https://github.com/daggerok/e2e/tree/ubuntu-xvfb-jdk8-chrome-v1)
-- [**ubuntu-xvfb-jdk8-firefox** - Ubuntu 18.04 image including Firefox browser, gecko driver, XVFB and JDK8](https://github.com/daggerok/e2e/tree/ubuntu-xvfb-jdk8-firefox-v1)
-- [**ubuntu-xvfb-jdk8-base** - Ubuntu 18.04 image including XVFB and JDK8](https://github.com/daggerok/e2e/tree/ubuntu-xvfb-jdk8-base-v1)
+tags:
 
-- [**bionic-xvfb-jdk8** - Ubuntu 18.04 image including Firefox and Chrome browsers, theirs web-drivers, XVFB and JDK8](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-v1)
-- [**bionic-xvfb-jdk8-chrome** - Ubuntu 18.04 image including Chrome browser, chrome driver, XVFB and JDK8](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-chrome-v1)
-- [**bionic-xvfb-jdk8-firefox** - Ubuntu 18.04 image including Firefox browser, gecko driver, XVFB and JDK8](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-firefox-v1)
-- [**bionic-xvfb-jdk8-base** - Ubuntu 18.04 image including XVFB and JDK8](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-base-v1)
+- [latest (bionic-xvfb-jdk8-firefox)](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-firefox-v2)
+- [bionic-xvfb-jdk8](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-v2)
+- [bionic-xvfb-jdk8-chrome](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-chrome-v2)
+- [bionic-xvfb-jdk8-firefox](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-firefox-v2)
+- [bionic-xvfb-jdk8-base](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-base-v2)
 
-- [**xenial-xvfb-jdk8** - Ubuntu 16.04 image including Firefox and Chrome browsers, theirs web-drivers, XVFB and JDK8](https://github.com/daggerok/e2e/tree/xenial-xvfb-jdk8-v1)
-- [**xenial-xvfb-jdk8-chrome** - Ubuntu 16.04 image including Chrome browser, chrome driver, XVFB and JDK8](https://github.com/daggerok/e2e/tree/xenial-xvfb-jdk8-chrome-v1)
-- [**xenial-xvfb-jdk8-firefox** - Ubuntu 16.04 image including Firefox browser, gecko driver, XVFB and JDK8](https://github.com/daggerok/e2e/tree/xenial-xvfb-jdk8-firefox-v1)
-- [**xenial-xvfb-jdk8-base** - Ubuntu 16.04 image including XVFB and JDK8](https://github.com/daggerok/e2e/tree/xenial-xvfb-jdk8-base-v1)
+- [ubuntu-xvfb-jdk8](https://github.com/daggerok/e2e/tree/ubuntu-xvfb-jdk8-v1)
+- [ubuntu-xvfb-jdk8-chrome](https://github.com/daggerok/e2e/tree/ubuntu-xvfb-jdk8-chrome-v1)
+- [ubuntu-xvfb-jdk8-firefox](https://github.com/daggerok/e2e/tree/ubuntu-xvfb-jdk8-firefox-v1)
+- [ubuntu-xvfb-jdk8-base](https://github.com/daggerok/e2e/tree/ubuntu-xvfb-jdk8-base-v1)
 
-- [**trusty-xvfb-jdk8** - Ubuntu 14.04 14.04 image including Firefox and Chrome browsers, theirs web-drivers, XVFB and JDK8](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-v1)
-- [**trusty-xvfb-jdk8-chrome** - Docker Ubuntu Trusty 14.04 image including Chrome browser, chrome driver, XVFB and JDK8](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-chrome-v1)
-- [**trusty-xvfb-jdk8-firefox** - Docker Ubuntu Trusty 14.04 image including Firefox browser, gecko driver, XVFB and JDK8](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-firefox-v1)
-- [**trusty-xvfb-jdk8-base** - Docker Ubuntu Trusty 14.04 base image including XVFB and JDK8](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-base-v1)
+- [bionic-xvfb-jdk8](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-v1)
+- [bionic-xvfb-jdk8-chrome](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-chrome-v1)
+- [bionic-xvfb-jdk8-firefox](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-firefox-v1)
+- [bionic-xvfb-jdk8-base](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-base-v1)
 
-- [**precise-xvfb-jdk8** - Ubuntu 12.04 image including Firefox browser, gecko driver, XVFB and JDK8](https://github.com/daggerok/e2e/tree/precise-xvfb-jdk8-v1)
-- [**precise-xvfb-jdk8-firefox** - Ubuntu 12.04 image including Firefox browser, gecko driver, XVFB and JDK8](https://github.com/daggerok/e2e/tree/precise-xvfb-jdk8-firefox-v1)
-- [**precise-xvfb-jdk8-base** - Ubuntu 12.04 image including XVFB and JDK8](https://github.com/daggerok/e2e/tree/precise-xvfb-jdk8-base-v1)
+- [xenial-xvfb-jdk8](https://github.com/daggerok/e2e/tree/xenial-xvfb-jdk8-v1)
+- [xenial-xvfb-jdk8-chrome](https://github.com/daggerok/e2e/tree/xenial-xvfb-jdk8-chrome-v1)
+- [xenial-xvfb-jdk8-firefox](https://github.com/daggerok/e2e/tree/xenial-xvfb-jdk8-firefox-v1)
+- [xenial-xvfb-jdk8-base](https://github.com/daggerok/e2e/tree/xenial-xvfb-jdk8-base-v1)
+
+- [trusty-xvfb-jdk8](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-v1)
+- [trusty-xvfb-jdk8-chrome](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-chrome-v1)
+- [trusty-xvfb-jdk8-firefox](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-firefox-v1)
+- [trusty-xvfb-jdk8-base](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-base-v1)
+
+- [precise-xvfb-jdk8](https://github.com/daggerok/e2e/tree/precise-xvfb-jdk8-v1)
 
 ## Usage
 
@@ -65,7 +74,7 @@ COPY . .
 
 ```dockerfile
 
-FROM daggerok/e2e:ubuntu-xvfb-jdk8-firefox-v1
+FROM daggerok/e2e:ubuntu-xvfb-jdk8-firefox-v2
 WORKDIR 'project-directory/'
 ENTRYPOINT start-xvfb && ./gradlew test firefox
 COPY . .
@@ -130,6 +139,6 @@ git push origin $tagName # push tag
 git add .
 git commit -am ...
 git push origin ubuntu-xvfb-jdk8
-git tag ubuntu-xvfb-jdk8-v1
+git tag ubuntu-xvfb-jdk8-v2
 git push origin --tags
 ```
