@@ -8,8 +8,8 @@ stack:
 - Docker Ubuntu `Trusty 14.04`
 - Docker Ubuntu `Precise 12.04`
 - Oracle Java Development Kit 8
-- Chrome with chrome driver version: `2.41`
-- Firefox with gecko driver version: `0.21.0`
+- Chrome with chrome driver version: `2.43`
+- Firefox with gecko driver version: `0.23.0`
 - Установка X Virtual Frame Buffer (xvfb)
 
 available images:
@@ -21,7 +21,11 @@ available images:
 
 tags:
 
-- [latest (trusty-xvfb-jdk8)](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-v1)
+- [latest (bionic-xvfb-jdk8-firefox)](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-firefox-v2)
+- [bionic-xvfb-jdk8](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-v2)
+- [bionic-xvfb-jdk8-chrome](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-chrome-v2)
+- [bionic-xvfb-jdk8-firefox](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-firefox-v2)
+- [bionic-xvfb-jdk8-base](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-base-v2)
 
 - [ubuntu-xvfb-jdk8](https://github.com/daggerok/e2e/tree/ubuntu-xvfb-jdk8-v1)
 - [ubuntu-xvfb-jdk8-chrome](https://github.com/daggerok/e2e/tree/ubuntu-xvfb-jdk8-chrome-v1)
@@ -70,7 +74,7 @@ COPY . .
 
 ```dockerfile
 
-FROM daggerok/e2e:ubuntu-xvfb-jdk8-firefox-v1
+FROM daggerok/e2e:ubuntu-xvfb-jdk8-firefox-v2
 WORKDIR 'project-directory/'
 ENTRYPOINT start-xvfb && ./gradlew test firefox
 COPY . .
@@ -135,6 +139,6 @@ git push origin $tagName # push tag
 git add .
 git commit -am ...
 git push origin bionic-xvfb-jdk8-chrome
-git tag bionic-xvfb-jdk8-chrome-v1
+git tag bionic-xvfb-jdk8-chrome-v2
 git push origin --tags
 ```
