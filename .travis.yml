@@ -6,7 +6,7 @@ service:
 - docker
 env:
   global:
-  - VERSION=v2
+  - VERSION=v3
   - DOCKER_IMAGE="daggerok/e2e:${TRAVIS_BRANCH}"
   - IMAGE="${TRAVIS_BRANCH}-${TRAVIS_BUILD_NUMBER}"
   - TERM=dumb
@@ -21,7 +21,7 @@ if: tag IS blank
 script:
 - |
   if [ ".${TRAVIS_BRANCH}" = ".master" ]; then
-    export DOCKER_IMAGE="daggerok/e2e:ubuntu-xvfb-jdk8"
+    export DOCKER_IMAGE="daggerok/e2e:bionic-xvfb-jdk8"
   fi
 - docker build --no-cache --force-rm -t ${IMAGE} .
 after_success:
