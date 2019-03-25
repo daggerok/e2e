@@ -1,7 +1,7 @@
 FROM daggerok/e2e:trusty-xvfb-jdk8-base-v2
 LABEL MAINTAINER='Maksim Kostromin <daggerok@gmail.com> https://github.com/daggerok'
 ENV DISPLAY=':99' \
-    GECKO_DRV_VER='0.23.0'
+    GECKO_DRV_VER='0.24.0'
 # firefox
 RUN sudo add-apt-repository ppa:mozillateam/firefox-next && \
     sudo apt-get update -y || echo 'oops...' && \
