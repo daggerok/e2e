@@ -1,11 +1,11 @@
-FROM daggerok/e2e:bionic-xvfb-jdk8-base-v2
+FROM daggerok/e2e:bionic-xvfb-jdk8-base-v3
 LABEL MAINTAINER='Maksim Kostromin <daggerok@gmail.com> https://github.com/daggerok'
 ENV DISPLAY=':99' \
-    GECKO_DRV_VER='0.23.0' \
-    CHROME_DRV_VER='2.43'
+    GECKO_DRV_VER='0.24.0' \
+    CHROME_DRV_VER='73.0.3683.68'
 # firefox
 RUN sudo add-apt-repository ppa:mozillateam/firefox-next                                                                            && \
-    sudo apt-get update -y --allow-releaseinfo-change                                                                               && \
+    sudo apt-get update -y || echo 'oops...'                                                                                        && \
     sudo apt-get clean -y                                                                                                           && \
     sudo apt-get install --fix-missing -y firefox
 # gecko driver
