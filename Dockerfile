@@ -1,42 +1,51 @@
-FROM daggerok/e2e:bionic-xvfb-jdk8-base-v3
+FROM ubuntu:14.04
 LABEL MAINTAINER='Maksim Kostromin <daggerok@gmail.com> https://github.com/daggerok'
-ENV DISPLAY=':99'                   \
-    GECKO_DRV_VER='0.26.0'          \
-    CHROME_DRV_VER='80.0.3987.106'  \
-    DEBIAN_FRONTEND='noninteractive'
-# firefox
-RUN echo 'firefox'                                                                                                                && \
-    sudo add-apt-repository -y ppa:mozillateam/firefox-next                                                                       && \
-    sudo apt-get update -yqq --allow-releaseinfo-change || echo 'oops...'                                                         && \
-    sudo apt-get clean -y                                                                                                         && \
-    sudo apt-get install --fix-missing -y firefox
-# gecko driver
-ENV GECKO_DRV_BASE_URL="https://github.com/mozilla/geckodriver/releases/download/v${GECKO_DRV_VER}"
-RUN wget ${GECKO_DRV_BASE_URL}/geckodriver-v${GECKO_DRV_VER}-linux64.tar.gz                                                       && \
-    tar -xvzf geckodriver*                                                                                                        && \
-    sudo mv -f geckodriver /usr/bin/                                                                                              && \
-    sudo chmod +x /usr/bin/geckodriver                                                                                            && \
-    sudo rm -rf geckodriver-v${GECKO_DRV_VER}-linux64.tar.gz
-# chrome
-ENV CHROME_BASE_URL='https://dl.google.com/linux/direct'
-RUN sudo apt-get install --fix-missing -yqq                                                                                          \
-      fonts-liberation libappindicator3-1 libasound2 libatk-bridge2.0-0                                                              \
-      libatk1.0-0 libcairo2 libcups2 libgdk-pixbuf2.0-0 libgtk-3-0                                                                   \
-      libnspr4 libnss3 libx11-xcb1 libxss1 xdg-utils                                                                              && \
-    wget -O google-chrome-stable.deb ${CHROME_BASE_URL}/google-chrome-stable_current_amd64.deb                                    && \
-    sudo dpkg -i google-chrome-stable.deb                                                                                         && \
-    sudo rm -rf ./google-chrome-stable.deb
-# chrome driver
-ENV CHROME_DRV_BASE_URL="https://chromedriver.storage.googleapis.com/${CHROME_DRV_VER}"
-RUN wget ${CHROME_DRV_BASE_URL}/chromedriver_linux64.zip                                                                          && \
-    unzip chromedriver_linux64.zip                                                                                                && \
-    sudo mv -f chromedriver /usr/bin/                                                                                             && \
-    sudo rm -rf chromedriver_linux64.zip
+ENV DISPLAY=':99' \
+    DEBIAN_FRONTEND='noninteractive' \
+    JAVA_HOME='/usr/lib/jvm/java-8-oracle'
+ENV PATH="${JAVA_HOME}/bin:${PATH}"
+ARG JAVA_OPTS_ARGS='\
+-Djava.net.preferIPv4Stack=true \
+-XX:+UnlockExperimentalVMOptions \
+-XX:+UseCGroupMemoryLimitForHeap \
+-XshowSettings:vm'
+ENV JAVA_OPTS="${JAVA_OPTS} ${JAVA_OPTS_ARGS}"
+# execute e2e tests as non root, but sudo user
+USER root
+RUN apt-get update -y || echo 'oops...' \
+ && apt-get clean -y \
+ && apt-get install --fix-missing -y sudo openssh-server \
+ && useradd -m e2e && echo 'e2e:e2e' | chpasswd \
+ && adduser e2e sudo \
+ && echo '\ne2e ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers \
+ && service ssh restart \
+ && chown -R e2e:e2e /home/e2e
+WORKDIR /home/e2e
+USER e2e
+# prepare
+RUN sudo apt-get update -y || echo 'oops...' \
+ && sudo apt-get install --fix-missing -y wget bash software-properties-common
+# jdk8
+RUN sudo apt-add-repository -y ppa:webupd8team/java \
+ && sudo apt-get update -y || echo 'oops...' \
+ && sudo echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections \
+ && sudo echo debconf shared/accepted-oracle-license-v1-1   seen true | sudo debconf-set-selections \
+ && sudo apt-get install --fix-missing -y oracle-java8-installer oracle-java8-set-default oracle-java8-unlimited-jce-policy
+# xvfb stuff
+RUN sudo apt-get install --fix-missing -y xvfb xorg xvfb dbus-x11 xfonts-100dpi xfonts-75dpi xfonts-cyrillic \
+ && echo '#!/bin/bash \n\
+sudo chown -R e2e:e2e ~/ || true \n\
+echo "${JAVA_OPTS}" \n\
+java -version \n\
+echo "starting Xvfb..." \n\
+sudo Xvfb -ac :99 -screen 0 1280x1024x16 & \n' \
+      >> ./start-xvfb \
+ && chmod +x ./start-xvfb \
+ && sudo mv -f ./start-xvfb /usr/bin/
 # cleanup and reduce image size
-RUN echo 'cleanup'                                                                                                                && \
-    sudo apt-get autoremove --purge -y                                                                                            && \
-    sudo apt-get autoclean -y                                                                                                     && \
-    sudo apt-get clean -y                                                                                                         && \
-    sudo rm -rf /tmp/* || true
+RUN sudo apt-get autoremove --purge -y \
+ && sudo apt-get autoclean -y \
+ && sudo apt-get clean -y \
+ && rm -rf /tmp/* || true
 # docker exec -it
 CMD /bin/bash
