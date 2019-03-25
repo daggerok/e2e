@@ -1,8 +1,6 @@
 # E2E image [![Build Status](https://travis-ci.org/daggerok/e2e.svg?branch=master)](https://travis-ci.org/daggerok/e2e)
 automated build for docker hub
 
-variations:
-
 - Docker Ubuntu `Bionic 18.04`
 - Docker Ubuntu `Trusty 14.04`
 - Oracle Java Development Kit 8
@@ -10,14 +8,14 @@ variations:
 - Firefox with gecko driver version: `0.24.0`
 - X Virtual Frame Buffer (xvfb)
 
-available images:
+_images_
 
 - **Docker Ubuntu Trusty 14.04 base image including XVFB and JDK8**
 - **Docker Ubuntu Trusty 14.04 image including Chrome browser, chrome driver, XVFB and JDK8**
 - **Docker Ubuntu Trusty 14.04 image including Firefox browser, gecko driver, XVFB and JDK8**
 - **Docker Ubuntu Trusty 14.04 image including Firefox and Chrome browsers, theirs web-drivers, XVFB and JDK8**
 
-tags:
+_tags_
 
 __v3__
 
@@ -36,7 +34,7 @@ __v3__
 - [trusty-xvfb-jdk8-firefox](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-firefox-v3)
 - [trusty-xvfb-jdk8-base](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-base-v3)
 
-## Web drivers
+_web drivers sources_
 
 * [Gecko firefox web driver](https://github.com/mozilla/geckodriver/releases)
   * in use: `0.24.0`
@@ -98,7 +96,7 @@ docker run --rm --name run-my-e2e-tests my-e2e-tests:latest
 
 ```
 
-## Reduce build time
+### reduce build time
 
 In real big projects resolving dependencies each time might take long time and sometimes it's not what we want...
 So we can try reuse existing local `~/.gradle` and `~/.m2` folders to reduce build time. 
@@ -120,7 +118,9 @@ docker run --rm --name run-my-e2e-tests \
 Sometines it might cause some strange and not obviouse problems for `file not found` or `permission denied` topics...
 So use it only if you know what you are doing and if you ready to spend time for some debugginh :)
 
-## Git
+## Development
+
+### git
 
 ```bash
 
@@ -137,7 +137,7 @@ git tag bionic-xvfb-jdk8-v3
 git push origin --tags
 ```
 
-## Upgrade flow
+### ppgrade flow
 
 _do not forget update versions (for example: v3) in a readme and CI builds as well..._
 
