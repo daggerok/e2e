@@ -135,7 +135,7 @@ git tag bionic-xvfb-jdk8-v3
 git push origin --tags
 ```
 
-### ppgrade flow
+### upgrade flow
 
 _do not forget update versions (for example: v3) in a readme and CI builds as well..._
 
