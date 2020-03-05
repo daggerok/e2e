@@ -1,0 +1,6 @@
+FROM daggerok/e2e:ubuntu-xvfb-jdk8-v3
+#/home/e2e/tests/
+WORKDIR 'tests/'
+ENTRYPOINT ["/bin/bash", "-c"]
+CMD ["start-xvfb && ./mvnw test -Dselenide.browser=chrome"]
+COPY . .
