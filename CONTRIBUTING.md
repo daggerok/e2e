@@ -33,6 +33,6 @@ git push origin $tagName # push tag
 git add .
 git commit -am ...
 git push origin master
-git tag trusty-xvfb-jdk8-v4
+git tag trusty-xvfb-jdk8-firefox-v4
 git push origin --tags
 ```
