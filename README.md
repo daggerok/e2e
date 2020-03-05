@@ -9,7 +9,7 @@ Automated e2e base image build for Docker Hub
 
 __v4__ _tags_
 
-- [ubuntu-xvfb-jdk8](https://github.com/daggerok/e2e/tree/master)
+- [ubuntu-xvfb-jdk8](https://github.com/daggerok/e2e/tree/ubuntu-xvfb-jdk8-v4)
 - [bionic-xvfb-jdk8](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-v4)
 - [bionic-xvfb-jdk8-firefox](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-firefox-v4)
 - [bionic-xvfb-jdk8-chrome](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-chrome-v4)
@@ -50,9 +50,7 @@ __v3__ _tags_
 _web drivers sources_
 
 * [Gecko firefox web driver](https://github.com/mozilla/geckodriver/releases)
-  * in use: `0.24.0`
 * [Google chrome web driver](http://chromedriver.chromium.org/)
-  * in use: `73.0.3683.68`
 
 ## Usage
 
