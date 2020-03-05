@@ -8,6 +8,11 @@ Automated e2e base image build for Docker Hub
 - Firefox with gecko driver version: `0.24.0`
 - X Virtual Frame Buffer (xvfb)
 
+__v4__ _tags_
+
+- [bionic-xvfb-jdk8-base](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-base-v4)
+- [trusty-xvfb-jdk8-base](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-base-v4)
+
 _images_
 
 - **Docker Ubuntu Trusty 14.04 base image including XVFB and JDK8**
@@ -15,9 +20,7 @@ _images_
 - **Docker Ubuntu Trusty 14.04 image including Firefox browser, gecko driver, XVFB and JDK8**
 - **Docker Ubuntu Trusty 14.04 image including Firefox and Chrome browsers, theirs web-drivers, XVFB and JDK8**
 
-__v4__ _tags_
-
-TODO: ...
+<!--
 
 __v3__ _tags_
 
@@ -35,6 +38,8 @@ __v3__ _tags_
 - [trusty-xvfb-jdk8-chrome](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-chrome-v3)
 - [trusty-xvfb-jdk8-firefox](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-firefox-v3)
 - [trusty-xvfb-jdk8-base](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-base-v3)
+
+-->
 
 _web drivers sources_
 

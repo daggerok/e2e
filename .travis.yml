@@ -27,6 +27,7 @@ jobs:
 
     - stage: test
       name: firefox e2e tests
+      if: branch NOT IN (trusty-xvfb-jdk8-base, bionic-xvfb-jdk8-base)
       script:
         - docker build -f ./tests/Dockerfile.firefox -t daggerok/e2e-tests:`date +%Y-%m-%d` ./tests
         - docker volume create e2e-data || echo 'oops, volume exists...'
