@@ -1,4 +1,4 @@
-FROM daggerok/e2e:ubuntu-xvfb-jdk8
+FROM daggerok/e2e:ubuntu-xvfb-jdk8-v4
 #/home/e2e/tests/
 WORKDIR 'tests/'
 ENTRYPOINT ["/bin/bash", "-c"]

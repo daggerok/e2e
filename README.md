@@ -8,6 +8,12 @@ Automated e2e base image build for Docker Hub
 - Firefox with gecko driver version: `0.24.0`
 - X Virtual Frame Buffer (xvfb)
 
+__v4__ _tags_
+
+- [ubuntu-xvfb-jdk8](https://github.com/daggerok/e2e/tree/master)
+- [bionic-xvfb-jdk8-base](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-base-v4)
+- [trusty-xvfb-jdk8-base](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-base-v4)
+
 _images_
 
 - **Docker Ubuntu Trusty 14.04 base image including XVFB and JDK8**
@@ -15,9 +21,7 @@ _images_
 - **Docker Ubuntu Trusty 14.04 image including Firefox browser, gecko driver, XVFB and JDK8**
 - **Docker Ubuntu Trusty 14.04 image including Firefox and Chrome browsers, theirs web-drivers, XVFB and JDK8**
 
-__v4__ _tags_
-
-TODO: ...
+<!--
 
 __v3__ _tags_
 
@@ -35,6 +39,8 @@ __v3__ _tags_
 - [trusty-xvfb-jdk8-chrome](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-chrome-v3)
 - [trusty-xvfb-jdk8-firefox](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-firefox-v3)
 - [trusty-xvfb-jdk8-base](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-base-v3)
+
+-->
 
 _web drivers sources_
 
@@ -59,7 +65,7 @@ COPY . .
 
 ```dockerfile
 
-FROM daggerok/e2e:ubuntu-xvfb-jdk8-chrome-latest
+FROM daggerok/e2e:ubuntu-xvfb-jdk8-v4
 WORKDIR 'some-directory/'
 ENTRYPOINT start-xvfb && ./gradlew test chrome
 COPY . .
@@ -68,7 +74,7 @@ COPY . .
 
 ```dockerfile
 
-FROM daggerok/e2e:ubuntu-xvfb-jdk8-firefox-v3
+FROM daggerok/e2e:ubuntu-xvfb-jdk8
 WORKDIR 'e2e-tests/'
 ENTRYPOINT start-xvfb && ./gradlew test firefox
 COPY . .
@@ -77,7 +83,7 @@ COPY . .
 
 ```dockerfile
 
-FROM daggerok/e2e:ubuntu-xvfb-jdk8-base
+FROM daggerok/e2e:ubuntu-xvfb-jdk8-base-v4
 RUN echo 'install browser, webdriver and use already installed and configured jdk8 + Xvfb based on Ubuntu 14.04'
 
 ```
