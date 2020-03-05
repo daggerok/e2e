@@ -1,5 +1,5 @@
-# E2E image [![Build Status](https://travis-ci.org/daggerok/e2e.svg?branch=master)](https://travis-ci.org/daggerok/e2e)
-automated build for docker hub
+# E2E image [![Build Status](https://travis-ci.org/daggerok/e2e.svg?branch=master)](https://travis-ci.org/daggerok/e2e) ![Firefox e2e tests](https://github.com/daggerok/e2e/workflows/Firefox%20e2e%20tests/badge.svg)
+Automated e2e base image build for Docker Hub
 
 - Docker Ubuntu `Bionic 18.04`
 - Docker Ubuntu `Trusty 14.04`
@@ -14,6 +14,10 @@ _images_
 - **Docker Ubuntu Trusty 14.04 image including Chrome browser, chrome driver, XVFB and JDK8**
 - **Docker Ubuntu Trusty 14.04 image including Firefox browser, gecko driver, XVFB and JDK8**
 - **Docker Ubuntu Trusty 14.04 image including Firefox and Chrome browsers, theirs web-drivers, XVFB and JDK8**
+
+__v4__ _tags_
+
+TODO: ...
 
 __v3__ _tags_
 
@@ -56,7 +60,7 @@ COPY . .
 ```dockerfile
 
 FROM daggerok/e2e:ubuntu-xvfb-jdk8-chrome-latest
-WORKDIR 'project-directory/'
+WORKDIR 'some-directory/'
 ENTRYPOINT start-xvfb && ./gradlew test chrome
 COPY . .
 
@@ -65,7 +69,7 @@ COPY . .
 ```dockerfile
 
 FROM daggerok/e2e:ubuntu-xvfb-jdk8-firefox-v3
-WORKDIR 'project-directory/'
+WORKDIR 'e2e-tests/'
 ENTRYPOINT start-xvfb && ./gradlew test firefox
 COPY . .
 
@@ -81,20 +85,40 @@ RUN echo 'install browser, webdriver and use already installed and configured jd
 ### build test image
 
 ```bash
-#prepare ./Dockerfile
-docker build -t my-e2e-tests:latest .
+# prepare tests/Dockerfile.firefox and build e2e test image  as usual...
+docker build -f ./tests/Dockerfile.firefox -t daggerok/e2e-tests:`date +%Y-%m-%d` ./tests
 
 ```
 
-### and run tests
+### run tests
 
 ```bash
 
-docker run --rm --name run-my-e2e-tests my-e2e-tests:latest
+docker run --rm --name run-`date +%Y-%m-%d`-e2e-tests daggerok/e2e-tests:`date +%Y-%m-%d`
 
 ```
 
-### reduce build time
+### reduce build time by using data volume
+
+```bash
+
+# build e2e test image  as usual...
+docker build -f ./tests/Dockerfile.firefox -t daggerok/e2e-tests:`date +%Y-%m-%d` ./tests
+
+# create re-usable e2e data volume
+docker volume create e2e-data || echo 'oops, volume exists...'
+
+# run e2e tests
+docker run --rm --name run-`date +%Y-%m-%d`-e2e-tests \
+  -v e2e-data:/home/e2e/.gradle/caches/modules-2/files-2.1 \
+  -v e2e-data:/home/e2e/.m2/repository \
+  daggerok/e2e-tests:`date +%Y-%m-%d`
+
+```
+
+<!--
+
+### reduce build time (wrong, don't do that)
 
 In real big projects resolving dependencies each time might take long time and sometimes it's not what we want...
 So we can try reuse existing local `~/.gradle` and `~/.m2` folders to reduce build time. 
@@ -113,45 +137,7 @@ docker run --rm --name run-my-e2e-tests \
 
 **WARNING**
 
-Sometines it might cause some strange and not obviouse problems for `file not found` or `permission denied` topics...
-So use it only if you know what you are doing and if you ready to spend time for some debugginh :)
+Sometimes it might cause some strange and not obvious problems for `file not found` or `permission denied` topics...
+So use it only if you know what you are doing and if you ready to spend time for some debugging :)
 
-## Development
-
-### git
-
-```bash
-
-git tag $tagName # create tag
-git tag -d $tagName # remove tag
-git push origin --tags # push tags
-git push origin $tagName # push tag
-
-# ie
-git add .
-git commit -am ...
-git push origin bionic-xvfb-jdk8
-git tag bionic-xvfb-jdk8-v3
-git push origin --tags
-```
-
-### upgrade flow
-
-_do not forget update versions (for example: v3) in a readme and CI builds as well..._
-
-- update base images if needed:
-  * `bionic-xvfb-jdk8-base`
-  * `trusty-xvfb-jdk8-base`
-  * `ubuntu-xvfb-jdk8-base`
-- next update chrome images:
-  * `bionic-xvfb-jdk8-chrome`
-  * `trusty-xvfb-jdk8-chrome`
-  * `ubuntu-xvfb-jdk8-chrome`
-- and update firefox images:
-  * `bionic-xvfb-jdk8-firefox`
-  * `trusty-xvfb-jdk8-firefox`
-  * `ubuntu-xvfb-jdk8-firefox`
-- lastly update all-in-one images:
-  * `bionic-xvfb-jdk8`
-  * `trusty-xvfb-jdk8`
-  * `ubuntu-xvfb-jdk8`
+-->
