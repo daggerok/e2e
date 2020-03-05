@@ -1,12 +1,23 @@
-# E2E image [![Build Status](https://travis-ci.org/daggerok/e2e.svg?branch=master)](https://travis-ci.org/daggerok/e2e) ![Firefox e2e tests](https://github.com/daggerok/e2e/workflows/Firefox%20e2e%20tests/badge.svg)
+# E2E image [![Build Status](https://travis-ci.org/daggerok/e2e.svg?branch=master)](https://travis-ci.org/daggerok/e2e) [![Firefox e2e tests](https://github.com/daggerok/e2e/workflows/Firefox%20e2e%20tests/badge.svg)](https://github.com/daggerok/e2e/actions)
 Automated e2e base image build for Docker Hub
 
-- Docker Ubuntu `Bionic 18.04`
-- Docker Ubuntu `Trusty 14.04`
-- Oracle Java Development Kit 8
-- Chrome with chrome driver version: `73.0.3683.68`
-- Firefox with gecko driver version: `0.24.0`
+- Docker Ubuntu `Bionic 18.04` / `Trusty 14.04`
+- Java Development Kit 8 `OpenJDK` / `AdoptOpenJDK`
+- Chrome with chrome driver version: `80.0.3987.106`
+- Firefox with gecko driver version: `0.26.0`
 - X Virtual Frame Buffer (xvfb)
+
+__v4__ _tags_
+
+- [ubuntu-xvfb-jdk8](https://github.com/daggerok/e2e/tree/ubuntu-xvfb-jdk8-v4)
+- [bionic-xvfb-jdk8](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-v4)
+- [bionic-xvfb-jdk8-firefox](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-firefox-v4)
+- [bionic-xvfb-jdk8-chrome](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-chrome-v4)
+- [bionic-xvfb-jdk8-base](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-base-v4)
+- [trusty-xvfb-jdk8](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-v4)
+- [trusty-xvfb-jdk8-firefox](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-firefox-v4)
+- [trusty-xvfb-jdk8-chrome](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-chrome-v4)
+- [trusty-xvfb-jdk8-base](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-base-v4)
 
 _images_
 
@@ -15,9 +26,7 @@ _images_
 - **Docker Ubuntu Trusty 14.04 image including Firefox browser, gecko driver, XVFB and JDK8**
 - **Docker Ubuntu Trusty 14.04 image including Firefox and Chrome browsers, theirs web-drivers, XVFB and JDK8**
 
-__v4__ _tags_
-
-TODO: ...
+<!--
 
 __v3__ _tags_
 
@@ -35,6 +44,8 @@ __v3__ _tags_
 - [trusty-xvfb-jdk8-chrome](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-chrome-v3)
 - [trusty-xvfb-jdk8-firefox](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-firefox-v3)
 - [trusty-xvfb-jdk8-base](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-base-v3)
+
+-->
 
 _web drivers sources_
 
@@ -59,7 +70,7 @@ COPY . .
 
 ```dockerfile
 
-FROM daggerok/e2e:ubuntu-xvfb-jdk8-chrome-latest
+FROM daggerok/e2e:bionic-xvfb-jdk8-v4
 WORKDIR 'some-directory/'
 ENTRYPOINT start-xvfb && ./gradlew test chrome
 COPY . .
@@ -68,7 +79,7 @@ COPY . .
 
 ```dockerfile
 
-FROM daggerok/e2e:ubuntu-xvfb-jdk8-firefox-v3
+FROM daggerok/e2e:trusty-xvfb-jdk8
 WORKDIR 'e2e-tests/'
 ENTRYPOINT start-xvfb && ./gradlew test firefox
 COPY . .
@@ -77,7 +88,8 @@ COPY . .
 
 ```dockerfile
 
-FROM daggerok/e2e:ubuntu-xvfb-jdk8-base
+FROM daggerok/e2e:trusty-xvfb-jdk8-base-v4
+#FROM daggerok/e2e:bionic-xvfb-jdk8-base-v4
 RUN echo 'install browser, webdriver and use already installed and configured jdk8 + Xvfb based on Ubuntu 14.04'
 
 ```
@@ -114,6 +126,19 @@ docker run --rm --name run-`date +%Y-%m-%d`-e2e-tests \
   -v e2e-data:/home/e2e/.m2/repository \
   daggerok/e2e-tests:`date +%Y-%m-%d`
 
+```
+
+### fix chrome
+
+To make it possible run e2e tests in chrome, you have to in addition configure `--no-sandbox` ChromeOptions argument
+in your tests, like so:
+
+```java
+    // ./mvnw test -Dselenide.browser=chrome -Dselenide.headless=true
+    if ("chrome".equals(Configuration.browser)) && Configuration.headless) {
+       ChromeOptions chromeOptions = new ChromeOptions().addArguments("--no-sandbox");
+      WebDriverRunner.setWebDriver(new ChromeDriver(chromeOptions));
+    }
 ```
 
 <!--
