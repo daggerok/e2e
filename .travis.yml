@@ -3,35 +3,54 @@ notifications:
 git:
   depth: false
 service:
-- docker
+  - docker
 env:
   global:
-  - VERSION=v3
-  - DOCKER_IMAGE="daggerok/e2e:${TRAVIS_BRANCH}"
-  - IMAGE="${TRAVIS_BRANCH}-${TRAVIS_BUILD_NUMBER}"
-  - TERM=dumb
-  - secure: KLDnrnXgD6pbAa9CwwiEvcbO1umX2FrbFc/b2uYYVbSrHRI64V5iwYnYDLE4Ldx8CL1/5pzpSbBciHYXOcUZGu9jVm4GuCQd0RAZYwymG8rJBxcfdyuGRooZHjGB5A3BtYtDvViMI3oLe2J1Su5dycsASfc6Va51QVx6L/Jm69yYG9/MmVsCh3jWHpA3rrGhd5vKmfJeb6EUjckIf2iT1flifHr5C6dv3rLtVisiLSUq4YEEqzNWOoI2qjTUgXidXA3XTvrXvm0GgRc/eKfZECPmPsG+Oo0jiNRLJeOnlOmKPDbDgHbLC1yQ8l5C27LZ9XUNRPDZ8Hh5vnywhvs5Jw1+sVdyv0NYwKY0eclQlL7Zu7y0fUODv6g7EpE6XW1q6SYQsoChe5NGG6RD9A+NI51UNmSYK2ziwu9bddN5Mr++x13BZhicaWqELwJ9EXSD8WFbtminFASnZwRuEVDsSHGiJBuhapAqaLFroC3PiYpXYta8Fdw+9uXJpQ35BtPQGAjZdO9fUn1vwJ/7G7IjQH58+FGUZqfLdv1lB8n5m4hj2L9bblDA6et7ubhks9EvTYI/SiIqeeYuQEAov0RZEaVxneRXdeClFWWEdYOFrzwBDqL4hRAz2vyzdySv0iRmfbWwVcOM7qsWDN2CbFit6UTU5XnoZiUZ+DkBd2zdxmI=
+    - TERM=dumb
+    - VERSION=v4
+    - DEBIAN_FRONTEND=noninteractive
+    - DOCKER_IMAGE="daggerok/e2e:${TRAVIS_BRANCH}"
+    - IMAGE="${TRAVIS_BRANCH}-${TRAVIS_BUILD_NUMBER}"
+    - secure: KLDnrnXgD6pbAa9CwwiEvcbO1umX2FrbFc/b2uYYVbSrHRI64V5iwYnYDLE4Ldx8CL1/5pzpSbBciHYXOcUZGu9jVm4GuCQd0RAZYwymG8rJBxcfdyuGRooZHjGB5A3BtYtDvViMI3oLe2J1Su5dycsASfc6Va51QVx6L/Jm69yYG9/MmVsCh3jWHpA3rrGhd5vKmfJeb6EUjckIf2iT1flifHr5C6dv3rLtVisiLSUq4YEEqzNWOoI2qjTUgXidXA3XTvrXvm0GgRc/eKfZECPmPsG+Oo0jiNRLJeOnlOmKPDbDgHbLC1yQ8l5C27LZ9XUNRPDZ8Hh5vnywhvs5Jw1+sVdyv0NYwKY0eclQlL7Zu7y0fUODv6g7EpE6XW1q6SYQsoChe5NGG6RD9A+NI51UNmSYK2ziwu9bddN5Mr++x13BZhicaWqELwJ9EXSD8WFbtminFASnZwRuEVDsSHGiJBuhapAqaLFroC3PiYpXYta8Fdw+9uXJpQ35BtPQGAjZdO9fUn1vwJ/7G7IjQH58+FGUZqfLdv1lB8n5m4hj2L9bblDA6et7ubhks9EvTYI/SiIqeeYuQEAov0RZEaVxneRXdeClFWWEdYOFrzwBDqL4hRAz2vyzdySv0iRmfbWwVcOM7qsWDN2CbFit6UTU5XnoZiUZ+DkBd2zdxmI=
 addons:
   apt:
     packages:
-    - bash
-    - docker-ce
+      - bash
+      - docker-ce
 install: true
+stages:
+  - test
+  - publish
 if: tag IS blank
-script:
-- |
-  if [ ".${TRAVIS_BRANCH}" = ".master" ]; then
-    export DOCKER_IMAGE="daggerok/e2e:bionic-xvfb-jdk8"
-  fi
-- docker build --no-cache --force-rm -t ${IMAGE} .
-after_success:
-- echo ${DOCKER_PASSWORD} | docker login -u daggerok --password-stdin
-- docker tag ${IMAGE} ${DOCKER_IMAGE}
-- docker tag ${IMAGE} "${DOCKER_IMAGE}-latest"
-- docker tag ${IMAGE} "${DOCKER_IMAGE}-${VERSION}"
-- docker push ${DOCKER_IMAGE}
-- docker push "${DOCKER_IMAGE}-latest"
-- docker push "${DOCKER_IMAGE}-${VERSION}"
+jobs:
+  include:
+
+    - stage: test
+      name: firefox e2e tests
+      script:
+        - docker build -f ./tests/Dockerfile.firefox -t daggerok/e2e-tests:`date +%Y-%m-%d` ./tests
+        - docker volume create e2e-data || echo 'oops, volume exists...'
+        - docker run --rm --name run-`date +%Y-%m-%d`-e2e-tests
+                      -v e2e-data:/home/e2e/.gradle/caches/modules-2/files-2.1
+                      -v e2e-data:/home/e2e/.m2/repository
+                      daggerok/e2e-tests:`date +%Y-%m-%d`
+
+    - stage: dockerhub publication
+      name: Publish image to Docker Hub
+      script:
+        - |
+          if [ ".${TRAVIS_BRANCH}" = ".master" ]; then
+            export DOCKER_IMAGE="daggerok/e2e:bionic-xvfb-jdk8"
+          fi
+        - docker build --no-cache --force-rm -t ${IMAGE} .
+      after_success:
+        - echo ${DOCKER_PASSWORD} | docker login -u daggerok --password-stdin
+        - docker tag ${IMAGE} ${DOCKER_IMAGE}
+        - docker tag ${IMAGE} "${DOCKER_IMAGE}-latest"
+        - docker tag ${IMAGE} "${DOCKER_IMAGE}-${VERSION}"
+        - docker push ${DOCKER_IMAGE}
+        - docker push "${DOCKER_IMAGE}-latest"
+        - docker push "${DOCKER_IMAGE}-${VERSION}"
 cache:
   directories:
-  - ~/.docker
+    - ~/.docker

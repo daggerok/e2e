@@ -1,0 +1,52 @@
+name: Firefox e2e tests
+on: [push]
+
+jobs:
+
+  e2e-tests:
+    strategy:
+      matrix:
+        java: [11]
+        os: [ubuntu-latest]
+        docker-version: [19.09]
+        docker-channel: [stable]
+    name: e2e-tests java ${{ matrix.java }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Git clone
+        uses: actions/checkout@v1
+
+      - name: Setup Docker ${{ matrix.docker-channel }} ${{ matrix.docker-version }}
+        uses: docker-practice/actions-setup-docker@master
+        with:
+          docker_version: ${{ matrix.docker-version }}
+          docker_channel: ${{ matrix.docker-channel }}
+      - name: Cache docker ${{ matrix.docker-channel }} ${{ matrix.docker-version }}
+        uses: actions/cache@v1
+        with:
+          path: ~/.docker
+          key: ${{ runner.os }}-${{ matrix.os }}-docker-
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.os }}-docker-
+
+      - name: Setup java ${{ matrix.java }}
+        uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java }}
+      - name: Cache maven deps ~/.m2/repository
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-${{ matrix.os }}-maven-
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.os }}-maven-
+
+      - name: Build and execute firefox e2e tests
+        run: |
+          cd $GITHUB_WORKSPACE && docker build -f ./tests/Dockerfile.firefox -t daggerok/e2e-tests:`date +%Y-%m-%d` ./tests
+          cd $GITHUB_WORKSPACE && docker volume create e2e-data || echo 'oops, volume already exists...'
+          cd $GITHUB_WORKSPACE && docker run --rm --name run-`date +%Y-%m-%d`-e2e-tests \
+                                             -v e2e-data:/home/e2e/.gradle/caches/modules-2/files-2.1 \
+                                             -v e2e-data:/home/e2e/.m2/repository \
+                                             daggerok/e2e-tests:`date +%Y-%m-%d`
