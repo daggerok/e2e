@@ -1,11 +1,10 @@
-# E2E image [![Build Status](https://travis-ci.org/daggerok/e2e.svg?branch=master)](https://travis-ci.org/daggerok/e2e) ![Firefox e2e tests](https://github.com/daggerok/e2e/workflows/Firefox%20e2e%20tests/badge.svg)
+# E2E image [![Build Status](https://travis-ci.org/daggerok/e2e.svg?branch=master)](https://travis-ci.org/daggerok/e2e) [![Firefox e2e tests](https://github.com/daggerok/e2e/workflows/Firefox%20e2e%20tests/badge.svg)](https://github.com/daggerok/e2e/actions)
 Automated e2e base image build for Docker Hub
 
-- Docker Ubuntu `Bionic 18.04`
-- Docker Ubuntu `Trusty 14.04`
-- Oracle Java Development Kit 8
-- Chrome with chrome driver version: `73.0.3683.68`
-- Firefox with gecko driver version: `0.24.0`
+- Docker Ubuntu `Bionic 18.04` / `Trusty 14.04`
+- Java Development Kit 8 `OpenJDK` / `AdoptOpenJDK`
+- Chrome with chrome driver version: `80.0.3987.106`
+- Firefox with gecko driver version: `0.26.0`
 - X Virtual Frame Buffer (xvfb)
 
 __v4__ _tags_
@@ -83,7 +82,8 @@ COPY . .
 
 ```dockerfile
 
-FROM daggerok/e2e:ubuntu-xvfb-jdk8-base-v4
+#FROM daggerok/e2e:trusty-xvfb-jdk8-base-v4
+FROM daggerok/e2e:bionic-xvfb-jdk8-base-v4
 RUN echo 'install browser, webdriver and use already installed and configured jdk8 + Xvfb based on Ubuntu 14.04'
 
 ```
