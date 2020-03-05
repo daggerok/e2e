@@ -10,6 +10,8 @@ Automated e2e base image build for Docker Hub
 __v4__ _tags_
 
 - [ubuntu-xvfb-jdk8](https://github.com/daggerok/e2e/tree/master)
+- [bionic-xvfb-jdk8](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-v4)
+- [trusty-xvfb-jdk8](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-v4)
 - [bionic-xvfb-jdk8-base](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-base-v4)
 - [trusty-xvfb-jdk8-base](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-base-v4)
 
@@ -64,7 +66,7 @@ COPY . .
 
 ```dockerfile
 
-FROM daggerok/e2e:ubuntu-xvfb-jdk8-v4
+FROM daggerok/e2e:bionic-xvfb-jdk8-v4
 WORKDIR 'some-directory/'
 ENTRYPOINT start-xvfb && ./gradlew test chrome
 COPY . .
@@ -73,7 +75,7 @@ COPY . .
 
 ```dockerfile
 
-FROM daggerok/e2e:ubuntu-xvfb-jdk8
+FROM daggerok/e2e:trusty-xvfb-jdk8
 WORKDIR 'e2e-tests/'
 ENTRYPOINT start-xvfb && ./gradlew test firefox
 COPY . .
@@ -82,8 +84,8 @@ COPY . .
 
 ```dockerfile
 
-#FROM daggerok/e2e:trusty-xvfb-jdk8-base-v4
-FROM daggerok/e2e:bionic-xvfb-jdk8-base-v4
+FROM daggerok/e2e:trusty-xvfb-jdk8-base-v4
+#FROM daggerok/e2e:bionic-xvfb-jdk8-base-v4
 RUN echo 'install browser, webdriver and use already installed and configured jdk8 + Xvfb based on Ubuntu 14.04'
 
 ```
