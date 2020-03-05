@@ -9,8 +9,14 @@ Automated e2e base image build for Docker Hub
 
 __v4__ _tags_
 
-- [ubuntu-xvfb-jdk8](https://github.com/daggerok/e2e/tree/master)
+- [ubuntu-xvfb-jdk8](https://github.com/daggerok/e2e/tree/ubuntu-xvfb-jdk8-v4)
+- [bionic-xvfb-jdk8](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-v4)
+- [bionic-xvfb-jdk8-firefox](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-firefox-v4)
+- [bionic-xvfb-jdk8-chrome](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-chrome-v4)
 - [bionic-xvfb-jdk8-base](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-base-v4)
+- [trusty-xvfb-jdk8](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-v4)
+- [trusty-xvfb-jdk8-firefox](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-firefox-v4)
+- [trusty-xvfb-jdk8-chrome](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-chrome-v4)
 - [trusty-xvfb-jdk8-base](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-base-v4)
 
 _images_
@@ -64,7 +70,7 @@ COPY . .
 
 ```dockerfile
 
-FROM daggerok/e2e:ubuntu-xvfb-jdk8-v4
+FROM daggerok/e2e:bionic-xvfb-jdk8-v4
 WORKDIR 'some-directory/'
 ENTRYPOINT start-xvfb && ./gradlew test chrome
 COPY . .
@@ -73,7 +79,7 @@ COPY . .
 
 ```dockerfile
 
-FROM daggerok/e2e:ubuntu-xvfb-jdk8
+FROM daggerok/e2e:trusty-xvfb-jdk8
 WORKDIR 'e2e-tests/'
 ENTRYPOINT start-xvfb && ./gradlew test firefox
 COPY . .
@@ -82,8 +88,8 @@ COPY . .
 
 ```dockerfile
 
-#FROM daggerok/e2e:trusty-xvfb-jdk8-base-v4
-FROM daggerok/e2e:bionic-xvfb-jdk8-base-v4
+FROM daggerok/e2e:trusty-xvfb-jdk8-base-v4
+#FROM daggerok/e2e:bionic-xvfb-jdk8-base-v4
 RUN echo 'install browser, webdriver and use already installed and configured jdk8 + Xvfb based on Ubuntu 14.04'
 
 ```
@@ -120,6 +126,19 @@ docker run --rm --name run-`date +%Y-%m-%d`-e2e-tests \
   -v e2e-data:/home/e2e/.m2/repository \
   daggerok/e2e-tests:`date +%Y-%m-%d`
 
+```
+
+### fix chrome
+
+To make it possible run e2e tests in chrome, you have to in addition configure `--no-sandbox` ChromeOptions argument
+in your tests, like so:
+
+```java
+    // ./mvnw test -Dselenide.browser=chrome -Dselenide.headless=true
+    if ("chrome".equals(Configuration.browser)) && Configuration.headless) {
+       ChromeOptions chromeOptions = new ChromeOptions().addArguments("--no-sandbox");
+      WebDriverRunner.setWebDriver(new ChromeDriver(chromeOptions));
+    }
 ```
 
 <!--
