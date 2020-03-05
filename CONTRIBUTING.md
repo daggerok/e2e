@@ -32,7 +32,7 @@ git push origin $tagName # push tag
 # ie
 git add .
 git commit -am ...
-git push origin trusty-xvfb-jdk8-base
-git tag trusty-xvfb-jdk8-base-v4
+git push origin bionic-xvfb-jdk8-base
+git tag bionic-xvfb-jdk8-base-v4
 git push origin --tags
 ```
