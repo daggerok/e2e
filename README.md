@@ -132,11 +132,11 @@ To make it possible run e2e tests in chrome, you have to in addition configure `
 in your tests, like so:
 
 ```java
-    // ./mvnw test -Dselenide.browser=chrome -Dselenide.headless=true
-    if ("chrome".equals(Configuration.browser)) && Configuration.headless) {
-      ChromeOptions chromeOptions = new ChromeOptions().addArguments("--no-sandbox");
-      WebDriverRunner.setWebDriver(new ChromeDriver(chromeOptions));
-    }
+// ./mvnw test -Dselenide.browser=chrome -Dselenide.headless=true
+if ("chrome".equals(Configuration.browser)) && Configuration.headless) {
+  ChromeOptions chromeOptions = new ChromeOptions().addArguments("--no-sandbox");
+  WebDriverRunner.setWebDriver(new ChromeDriver(chromeOptions));
+}
 ```
 
 <!--
