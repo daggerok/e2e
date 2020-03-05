@@ -53,11 +53,14 @@ jobs:
         - docker push "${DOCKER_IMAGE}-${VERSION}"
         #
         - echo testing...
-        - docker rmi -f ${DOCKER_IMAGE}
-        - docker pull ${DOCKER_IMAGE}
-        - newFrom="FROM ${DOCKER_IMAGE}"
-        - sed -i "1s/.*/$newFrom/" ./tests/Dockerfile.firefox
-        - docker build -f ./tests/Dockerfile.firefox -t daggerok/e2e-tests:`date +%Y-%m-%d` ./tests
+        - docker rmi -f ${DOCKER_IMAGE} "${DOCKER_IMAGE}-${VERSION}"
+        - docker pull "${DOCKER_IMAGE}-${VERSION}"
+        - export newHead="FROM ${DOCKER_IMAGE}-${VERSION}"
+        - export newTail=`cat ./tests/Dockerfile.firefox | tail -4`
+        - echo "$newHead" > ./tests/Dockerfile.firefox
+        - echo "$newTail" >> ./tests/Dockerfile.firefox
+        - cat ./tests/Dockerfile.firefox
+        - docker build -f `pwd`/tests/Dockerfile.firefox -t daggerok/e2e-tests:`date +%Y-%m-%d` `pwd`/tests
         - docker volume create e2e-data || echo 'oops, volume exists...'
         - docker run --rm --name run-`date +%Y-%m-%d`-e2e-tests
                      -v e2e-data:/home/e2e/.m2/repository

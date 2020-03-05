@@ -1,4 +1,4 @@
-FROM daggerok/e2e:bionic-xvfb-jdk8-base-v4
+FROM daggerok/e2e:trusty-xvfb-jdk8-base-v4
 LABEL MAINTAINER='Maksim Kostromin <daggerok@gmail.com> https://github.com/daggerok'
 USER e2e
 ENV DISPLAY=':99'                   \
