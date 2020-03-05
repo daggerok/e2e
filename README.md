@@ -9,10 +9,14 @@ Automated e2e base image build for Docker Hub
 
 __v4__ _tags_
 
-- [ubuntu-xvfb-jdk8](https://github.com/daggerok/e2e/tree/master)
+- [ubuntu-xvfb-jdk8](https://github.com/daggerok/e2e/tree/ubuntu-xvfb-jdk8-v4)
 - [bionic-xvfb-jdk8](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-v4)
-- [trusty-xvfb-jdk8](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-v4)
+- [bionic-xvfb-jdk8-firefox](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-firefox-v4)
+- [bionic-xvfb-jdk8-chrome](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-chrome-v4)
 - [bionic-xvfb-jdk8-base](https://github.com/daggerok/e2e/tree/bionic-xvfb-jdk8-base-v4)
+- [trusty-xvfb-jdk8](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-v4)
+- [trusty-xvfb-jdk8-firefox](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-firefox-v4)
+- [trusty-xvfb-jdk8-chrome](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-chrome-v4)
 - [trusty-xvfb-jdk8-base](https://github.com/daggerok/e2e/tree/trusty-xvfb-jdk8-base-v4)
 
 _images_
@@ -46,9 +50,7 @@ __v3__ _tags_
 _web drivers sources_
 
 * [Gecko firefox web driver](https://github.com/mozilla/geckodriver/releases)
-  * in use: `0.24.0`
 * [Google chrome web driver](http://chromedriver.chromium.org/)
-  * in use: `73.0.3683.68`
 
 ## Usage
 
@@ -122,6 +124,19 @@ docker run --rm --name run-`date +%Y-%m-%d`-e2e-tests \
   -v e2e-data:/home/e2e/.m2/repository \
   daggerok/e2e-tests:`date +%Y-%m-%d`
 
+```
+
+### fix chrome
+
+To make it possible run e2e tests in chrome, you have to in addition configure `--no-sandbox` ChromeOptions argument
+in your tests, like so:
+
+```java
+    // ./mvnw test -Dselenide.browser=chrome -Dselenide.headless=true
+    if ("chrome".equals(Configuration.browser)) && Configuration.headless) {
+       ChromeOptions chromeOptions = new ChromeOptions().addArguments("--no-sandbox");
+      WebDriverRunner.setWebDriver(new ChromeDriver(chromeOptions));
+    }
 ```
 
 <!--

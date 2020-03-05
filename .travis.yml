@@ -26,6 +26,15 @@ jobs:
   include:
 
     - stage: test
+      name: chrome e2e tests
+      script:
+        - docker build -f ./tests/Dockerfile.chrome -t daggerok/e2e-tests:`date +%Y-%m-%d` ./tests
+        - docker volume create e2e-data || echo 'oops, volume exists...'
+        - docker run --rm --name run-`date +%Y-%m-%d`-e2e-tests
+                      -v e2e-data:/home/e2e/.m2/repository
+                      daggerok/e2e-tests:`date +%Y-%m-%d`
+
+    - stage: test
       name: firefox e2e tests
       script:
         - docker build -f ./tests/Dockerfile.firefox -t daggerok/e2e-tests:`date +%Y-%m-%d` ./tests
@@ -56,6 +65,7 @@ jobs:
         - docker rmi -f ${DOCKER_IMAGE} "${DOCKER_IMAGE}-${VERSION}"
         - docker pull "${DOCKER_IMAGE}-${VERSION}"
         - export newHead="FROM ${DOCKER_IMAGE}-${VERSION}"
+        #
         - export newTail=`cat ./tests/Dockerfile.firefox | tail -4`
         - echo "$newHead" > ./tests/Dockerfile.firefox
         - echo "$newTail" >> ./tests/Dockerfile.firefox
