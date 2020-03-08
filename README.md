@@ -141,7 +141,7 @@ if ("chrome".equals(Configuration.browser)) && Configuration.headless) {
 
 <!--
 
-### reduce build time (wrong, don't do that)
+### reduce build time (wrong, don't do that) trigger build...
 
 In real big projects resolving dependencies each time might take long time and sometimes it's not what we want...
 So we can try reuse existing local `~/.gradle` and `~/.m2` folders to reduce build time. 
